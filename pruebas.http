@@ -1,0 +1,46 @@
+### Verificar que la API responde
+GET http://127.0.0.1:8000/
+
+### Consultar estudiantes de ejemplo
+GET http://127.0.0.1:8000/estudiantes
+
+### Consultar responsables de ejemplo
+GET http://127.0.0.1:8000/responsables
+
+### 1. Crear una solicitud
+# La respuesta devuelve el ID generado. Usar ese ID en las siguientes peticiones.
+POST http://127.0.0.1:8000/solicitudes
+Content-Type: application/json
+
+{
+  "titulo": "Solicitud de certificado analítico",
+  "descripcion": "Necesito el certificado para presentar en otra institución.",
+  "tipo": "CERTIFICADO",
+  "estudiante_id": 1,
+  "dias_espera": 2
+}
+
+### 2. Cambiar estado (reemplazar 1 por el ID recibido al crear)
+PATCH http://127.0.0.1:8000/solicitudes/1/estado
+Content-Type: application/json
+
+{
+  "estado": "EN_REVISION"
+}
+
+### 3. Asignar responsable (responsable_id 1 o 2)
+PATCH http://127.0.0.1:8000/solicitudes/1/responsable
+Content-Type: application/json
+
+{
+  "responsable_id": 1
+}
+
+### 4. Listar y generar reporte
+GET http://127.0.0.1:8000/solicitudes
+
+### Filtrar por estado
+GET http://127.0.0.1:8000/solicitudes?estado=EN_REVISION
+
+### Filtrar por tipo
+GET http://127.0.0.1:8000/solicitudes?tipo=CERTIFICADO
